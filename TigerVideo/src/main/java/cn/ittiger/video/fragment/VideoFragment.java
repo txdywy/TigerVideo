@@ -7,9 +7,7 @@ import cn.ittiger.video.R;
 import cn.ittiger.video.adapter.VideoAdapter;
 import cn.ittiger.video.bean.VideoData;
 import cn.ittiger.video.mvpview.VideoMvpView;
-import cn.ittiger.video.player.VideoPlayerHelper;
 import cn.ittiger.video.presenter.VideoPresenter;
-import cn.ittiger.video.ui.LoadingView;
 import cn.ittiger.video.ui.recycler.CommonRecyclerView;
 import cn.ittiger.video.ui.recycler.SpacesItemDecoration;
 import cn.ittiger.video.util.UIUtil;
@@ -71,14 +69,15 @@ public abstract class VideoFragment extends
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
-                int curPlayPosition = VideoPlayerHelper.getInstance().getCurrPlayPosition();
-                int lastPlayPosition = VideoPlayerHelper.getInstance().getLastPlayPosition();
+                VideoAdapter adapter = (VideoAdapter)recyclerView.getAdapter();
+                int curPlayPosition = adapter.getCurPosition();
+                int lastPlayPosition = adapter.getLastPosition();
                 if (curPlayPosition != -1 && (curPlayPosition < mRecyclerView.getFirstVisiblePosition() ||
                         curPlayPosition > mRecyclerView.getLastVisiblePosition())) {
-                    VideoPlayerHelper.getInstance().smallWindowPlay();//移除屏幕之后进入小窗口播放
+                    adapter.getCurVideoPlayer().startWindowTiny();//移除屏幕之后进入小窗口播放
                 } else if (curPlayPosition == -1 && lastPlayPosition >= mRecyclerView.getFirstVisiblePosition()
                         && lastPlayPosition <= mRecyclerView.getLastVisiblePosition()) {
-                    VideoPlayerHelper.getInstance().smallWindowToListPlay();
+                    adapter.getCurVideoPlayer().backPress();
                 }
                 super.onScrolled(recyclerView, dx, dy);
             }
@@ -86,21 +85,11 @@ public abstract class VideoFragment extends
         return view;
     }
 
-    @OnClick(R.id.iv_video_close)
-    public void onClickCloseVideo(View view) {
-
-        VideoPlayerHelper.getInstance().stop();
-    }
-
     @Override
     public void loadData(boolean pullToRefresh) {
 
         showLoading(pullToRefresh);
         presenter.refreshData(pullToRefresh);
-        if(mIsFirstLoad) {
-            VideoPlayerHelper.getInstance().setSmallVideoPlayerContainer(mSmallVideoPlayerContainer);
-            mIsFirstLoad = false;
-        }
     }
 
     @Override
@@ -176,6 +165,7 @@ public abstract class VideoFragment extends
     public void onDestroyView() {
 
         super.onDestroyView();
+        mVideoAdapter.onDestroy();
         mVideoAdapter = null;
         mIsFirstLoad = true;
     }

@@ -6,8 +6,8 @@ import cn.ittiger.video.R;
 import cn.ittiger.video.adapter.TabAdapter;
 import cn.ittiger.video.bean.VideoTabData;
 import cn.ittiger.video.mvpview.VideoTabMvpView;
-import cn.ittiger.video.player.VideoPlayerHelper;
 import cn.ittiger.video.presenter.VideoTabPresenter;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,7 +49,7 @@ public abstract class BaseTabFragment extends
             @Override
             public void onPageSelected(int position) {
 
-                VideoPlayerHelper.getInstance().stop();
+                JCVideoPlayer.releaseAllVideos();
             }
 
             @Override

@@ -8,9 +8,9 @@ import cn.ittiger.video.fragment.BaseFragment;
 import cn.ittiger.video.factory.FragmentFactory;
 import cn.ittiger.video.fragment.NameFragment;
 import cn.ittiger.video.http.DataType;
-import cn.ittiger.video.player.VideoPlayerHelper;
 import cn.ittiger.video.util.ShareHelper;
 import cn.ittiger.video.util.UIUtil;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        VideoPlayerHelper.init(this);
         init();
     }
 
@@ -138,14 +137,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         super.onDestroy();
         ((TigerApplication)getApplication()).onDestroy();
-        VideoPlayerHelper.getInstance().stop();
     }
 
     @Override
     protected void onPause() {
 
         super.onPause();
-        VideoPlayerHelper.getInstance().pause();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     private long exitTime = 0;
@@ -155,6 +153,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+        if (JCVideoPlayer.backPress()) {
             return;
         }
         if(System.currentTimeMillis() - exitTime > 2000) {

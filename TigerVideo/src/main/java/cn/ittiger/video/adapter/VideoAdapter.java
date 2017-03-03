@@ -2,14 +2,13 @@ package cn.ittiger.video.adapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.ittiger.video.R;
 import cn.ittiger.video.bean.VideoData;
+import cn.ittiger.video.player.TigerVideoPlayer;
 import cn.ittiger.video.ui.recycler.HeaderAndFooterAdapter;
 import cn.ittiger.video.ui.recycler.ViewHolder;
-import cn.ittiger.video.player.VideoPlayState;
-import cn.ittiger.video.player.VideoPlayerHelper;
 import cn.ittiger.video.util.DisplayManager;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 import com.bumptech.glide.Glide;
 
@@ -18,8 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -27,9 +24,12 @@ import java.util.List;
  * @author: laohu on 2016/8/24
  * @site: http://ittiger.cn
  */
-public class VideoAdapter extends HeaderAndFooterAdapter<VideoData> {
+public class VideoAdapter extends HeaderAndFooterAdapter<VideoData> implements TigerVideoPlayer.VideoClickPlayListener {
 
     private Context mContext;
+    private int mCurPosition = -1;
+    private int mLastPosition = -1;
+    private TigerVideoPlayer mCurVideoPlayer;
 
     public VideoAdapter(Context context, List<VideoData> list) {
 
@@ -48,27 +48,43 @@ public class VideoAdapter extends HeaderAndFooterAdapter<VideoData> {
     public void onBindItemViewHolder(ViewHolder holder, int position, VideoData item) {
 
         VideoViewHolder videoViewHolder = (VideoViewHolder) holder;
+        videoViewHolder.mVideoPlayer.setVideoClickPlayListener(this);
+        videoViewHolder.mVideoPlayer.setUp(
+                "http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                item.getTitle(), item.getDuration(), position);
+
         Glide.with(mContext).load(item.getImageUrl())
                 .placeholder(R.drawable.video_image_place_holder)
                 .error(R.drawable.video_image_place_holder)
-                .into(videoViewHolder.mVideoImage);
-        videoViewHolder.mDuration.setText(item.getDuration());
-        videoViewHolder.mTitle.setText(item.getTitle());
-        videoViewHolder.setPosition(position);
-        videoViewHolder.itemView.setTag(R.id.tag_video_list_item, VideoPlayState.STOP);
+                .into(videoViewHolder.mVideoPlayer.thumbImageView);
+    }
+
+    @Override
+    public void onVideoClick(TigerVideoPlayer videoPlayer, int position) {
+
+        mLastPosition = mCurPosition;
+        mCurPosition = position;
+        mCurVideoPlayer = videoPlayer;
+    }
+
+    public int getCurPosition() {
+
+        return mCurPosition;
+    }
+
+    public int getLastPosition() {
+
+        return mLastPosition;
+    }
+
+    public TigerVideoPlayer getCurVideoPlayer() {
+
+        return mCurVideoPlayer;
     }
 
     class VideoViewHolder extends ViewHolder {
-        @BindView(R.id.iv_video_item_image)
-        ImageView mVideoImage;
-        @BindView(R.id.iv_video_item_play_btn)
-        ImageView mPlayImage;
-        @BindView(R.id.tv_video_duration)
-        TextView mDuration;
-        @BindView(R.id.tv_video_title)
-        TextView mTitle;
-
-        int mPosition;
+        @BindView(R.id.videoPlayer)
+        TigerVideoPlayer mVideoPlayer;
 
         public VideoViewHolder(View itemView) {
 
@@ -82,16 +98,10 @@ public class VideoAdapter extends HeaderAndFooterAdapter<VideoData> {
             itemView.setLayoutParams(params);
             ButterKnife.bind(this, itemView);
         }
+    }
 
-        @OnClick({R.id.iv_video_item_image, R.id.iv_video_item_play_btn})
-        public void onClick(View v) {
+    public void onDestroy() {
 
-            VideoPlayerHelper.getInstance().play((ViewGroup) itemView, getItem(mPosition).getVideoUrl(), mPosition);
-        }
-
-        public void setPosition(int position) {
-
-            mPosition = position;
-        }
+        mCurVideoPlayer = null;
     }
 }
