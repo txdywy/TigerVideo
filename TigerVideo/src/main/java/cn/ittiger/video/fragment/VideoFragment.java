@@ -4,6 +4,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ittiger.video.R;
+import cn.ittiger.video.activity.MainActivity;
 import cn.ittiger.video.adapter.VideoAdapter;
 import cn.ittiger.video.bean.VideoData;
 import cn.ittiger.video.mvpview.VideoMvpView;
@@ -113,6 +114,8 @@ public abstract class VideoFragment extends
 
     @Override
     public void showLoadMoreView() {
+
+        ((MainActivity)getActivity()).showInterAd();
 
         if(mFooterView.getVisibility() == View.GONE) {
             mFooterView.setVisibility(View.VISIBLE);

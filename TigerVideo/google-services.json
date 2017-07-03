@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1044932773854",
+    "firebase_url": "https://shot-video.firebaseio.com",
+    "project_id": "shot-video",
+    "storage_bucket": "shot-video.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044932773854:android:34837136461f4b6e",
+        "android_client_info": {
+          "package_name": "com.ylab.shot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044932773854-sp3p8q8mq95vlc4emqm1oa00jfgboep0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfpZ83btrS4gAqERJ-f-s_YIct8FNwjac"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

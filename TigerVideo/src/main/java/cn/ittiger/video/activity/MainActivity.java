@@ -12,6 +12,9 @@ import cn.ittiger.video.player.VideoPlayerHelper;
 import cn.ittiger.video.util.ShareHelper;
 import cn.ittiger.video.util.UIUtil;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import android.annotation.TargetApi;
@@ -26,10 +29,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView mNavigationView;
 
     SparseArray<Fragment> mFragmentSparseArray = new SparseArray<>();
+    private InterstitialAd mInterstitialAd;
+    private long AdInterTs;
+    private long count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +66,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
+
+
         VideoPlayerHelper.init(this);
         init();
+
+        this.AdInterTs = System.currentTimeMillis();
+        this.count = 0;
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-9974885785906256/2421647124");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                Log.d("hahaha", "ad closed");
+            }
+        });
+        requestNewInterstitial();
+
+        showInterAd();
+
+    }
+
+
+    private void requestNewInterstitial() {
+        //Log.d("hahaha", AdRequest.DEVICE_ID_EMULATOR);
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        /*
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        */
+        mInterstitialAd.loadAd(adRequest);
+    }
+
+
+    public void showInterAd() {
+        long ts = System.currentTimeMillis();
+        long elapsed = ts - this.AdInterTs;
+        this.count++;
+        if (elapsed > 3 * 60 * 1000 || this.count % 10 == 5){
+            this.AdInterTs = ts;
+        }
+        else{
+            Log.d("hahaha", "time too short " + elapsed/1000 + " count:" + this.count);
+            return;
+        }
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+            Log.d("hahaha", "ad 111 ready");
+        }
+        else{
+            Log.d("hahaha", "ad 222 not ready");
+        }
     }
 
     @TargetApi(19)
@@ -143,16 +204,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onPause() {
-
         super.onPause();
         VideoPlayerHelper.getInstance().pause();
+
     }
 
     private long exitTime = 0;
 
     @Override
     public void onBackPressed() {
-
         if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
             return;
