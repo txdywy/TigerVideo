@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="TigerVideo"
+        android:text="Shot Video"
         android:layout_above="@+id/textView"
         android:textStyle="bold"
         android:textSize="24sp"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="a pure funny video App for you"
+        android:text="- Get another shot for more fun."
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
 </RelativeLayout>

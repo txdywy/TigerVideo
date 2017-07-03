@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="视频">
+    <item android:title="Video">
         <menu>
             <item
                 android:id="@+id/nav_net_easy"
@@ -18,11 +18,12 @@
                 android:id="@+id/nav_ifeng"
                 android:icon="@drawable/nav_ifeng"
                 android:checkable="true"
-                android:title="@string/ifeng_video"/>
+                android:title="@string/ifeng_video"
+                android:visible="false"/>
         </menu>
     </item>
 
-    <item android:title="选项">
+    <item android:title="Option">
         <menu>
             <item
                 android:id="@+id/nav_share"
