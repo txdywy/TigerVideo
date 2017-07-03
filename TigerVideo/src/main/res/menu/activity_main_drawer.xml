@@ -34,7 +34,8 @@
                 android:id="@+id/nav_about"
                 android:icon="@drawable/nav_about"
                 android:checkable="true"
-                android:title="@string/about"/>
+                android:title="@string/about"
+                android:visible="false"/>
         </menu>
     </item>
 
