@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         long ts = System.currentTimeMillis();
         long elapsed = ts - this.AdInterTs;
         this.count++;
-        if (elapsed > 3 * 60 * 1000 || this.count % 5 == 3){
+        if (elapsed > 3 * 60 * 1000 || this.count % 1 == 0){
             this.AdInterTs = ts;
         }
         else{
