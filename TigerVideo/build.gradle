@@ -11,8 +11,8 @@ android {
         applicationId "com.ylab.shot"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 11
-        versionName "1.1"
+        versionCode 113
+        versionName "1.13"
     }
     buildTypes {
         release {

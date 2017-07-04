@@ -77,11 +77,6 @@ public class WebPageActivity extends AppCompatActivity {
             mProgressBar.setVisibility(View.GONE);
         }
 
-        @Override
-        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-
-            handler.proceed();
-        }
     };
 
     private WebChromeClient mWebChromeClient = new WebChromeClient() {
