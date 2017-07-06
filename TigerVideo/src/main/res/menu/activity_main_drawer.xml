@@ -13,7 +13,8 @@
                 android:id="@+id/nav_ttkb"
                 android:icon="@drawable/nav_ttkb"
                 android:checkable="true"
-                android:title="@string/ttkb_video"/>
+                android:title="@string/ttkb_video"
+                android:visible="false"/>
             <item
                 android:id="@+id/nav_ifeng"
                 android:icon="@drawable/nav_ifeng"

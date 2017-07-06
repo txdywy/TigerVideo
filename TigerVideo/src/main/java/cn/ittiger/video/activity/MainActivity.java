@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.AdInterTs = System.currentTimeMillis();
         this.count = 0;
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-9974885785906256/2421647124");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7366328858638561/4364472730");
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
