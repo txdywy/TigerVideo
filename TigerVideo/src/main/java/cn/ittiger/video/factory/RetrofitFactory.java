@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class RetrofitFactory {
 
     private static final int TIME_OUT = 12;//超时时间
-    private static final String NETEASY_BASE_URL = "http://c.m.163.com/";
+    private static final String NETEASY_BASE_URL = "http://mei12356.ml/";//"http://c.m.163.com/";
     private static final String TTKB_BASE_URL = "http://video.toutiaokuaibao.com/";
     private static final String IFENG_BASE_URL = "http://vcis.ifeng.com/";
     private static volatile NetEasyApi sNetEasyService;

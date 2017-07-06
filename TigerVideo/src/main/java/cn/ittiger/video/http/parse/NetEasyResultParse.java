@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class NetEasyResultParse implements ResultParse {
     private static final String KEY_VIDEO_LIST = "视频";
-    private static final String KEY_ID = "vid";
+    //private static final String KEY_ID = "vid";
     private static final String KEY_IMAGE = "cover";
     private static final String KEY_TITLE = "title";
     private static final String KEY_VIDEO_URL = "mp4_url";
@@ -35,12 +35,12 @@ public class NetEasyResultParse implements ResultParse {
             item = videos.getJSONObject(i);
             VideoData videoData = new VideoData();
             videoData.setDataType(DataType.NET_EASY.value());
-            videoData.setId(item.optString(KEY_ID));
+            //videoData.setId(item.optString(KEY_ID));
             videoData.setImageUrl(item.optString(KEY_IMAGE));
             videoData.setTitle(item.optString(KEY_TITLE));
             videoData.setVideoUrl(item.optString(KEY_VIDEO_URL));
-            long playDuration = item.optLong(KEY_DURATION);
-            videoData.setDuration(Utils.formatTimeLength(playDuration));
+            //long playDuration = item.optLong(KEY_DURATION);
+            //videoData.setDuration(Utils.formatTimeLength(playDuration));
             list.add(videoData);
         }
         return list;
