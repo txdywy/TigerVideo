@@ -75,7 +75,7 @@ public class VideoAdapter extends HeaderAndFooterAdapter<VideoData> {
             super(itemView);
             //以宽高比16:9的比例设置播放器的尺寸
             int width = DisplayManager.screenWidthPixel(mContext);
-            int height = (int) (width * 1.0f / 16 * 9 + 0.5f);
+            int height = width;//(int) (width * 1.0f / 16 * 9 + 0.5f);
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) itemView.getLayoutParams();
             params.height = height;
             params.width = width;
