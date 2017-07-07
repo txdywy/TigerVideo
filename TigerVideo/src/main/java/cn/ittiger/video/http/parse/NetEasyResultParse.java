@@ -1,5 +1,7 @@
 package cn.ittiger.video.http.parse;
 
+import android.util.Log;
+
 import cn.ittiger.video.bean.VideoData;
 import cn.ittiger.video.bean.VideoTabData;
 import cn.ittiger.video.http.DataType;

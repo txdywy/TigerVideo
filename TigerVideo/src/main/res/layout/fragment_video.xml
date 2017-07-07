@@ -19,7 +19,7 @@
         <RelativeLayout
             android:id="@+id/small_video_player_container"
             android:layout_width="@dimen/d_160"
-            android:layout_height="@dimen/d_90"
+            android:layout_height="@dimen/d_160"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/video_shade_bg"
